@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.5"
-  spec.add_development_dependency "rake", "~> 0"
-  spec.add_runtime_dependency "rack", "~> 0"
+  spec.add_development_dependency "rake"
+  spec.add_runtime_dependency "rack"
+  spec.add_development_dependency "rack-test"
 end
