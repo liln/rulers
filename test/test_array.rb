@@ -1,7 +1,7 @@
 require_relative "test_helper"
 require "rulers/array"
 
-class RulersArrayTest < Test::Unit::TestCase
+class RulersArrayTest < Minitest::Unit::TestCase
   include Rack::Test::Methods
 
   def test_sum
