@@ -17,9 +17,10 @@ module Rulers
         text = controller.send(act)
 
         [200, {'Content-Type' => 'text/html'}, [text]]
-      rescue
-        [500, {'Content-Type' => 'text/html'},
-          ["Whoops!! Internal Server Error"]]
+      rescue Exception => e
+        error = e.inspect + "\n" + e.backtrace.join("\n")
+        [500, {'Content-Type' => 'text/text'},
+          [error]]
       end
     end
   end

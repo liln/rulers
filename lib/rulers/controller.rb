@@ -11,11 +11,14 @@ module Rulers
     end
 
     def render(view_name, locals = {})
-      filename = File.join "app", "views",
-        controller_name, "#{view_name}.html.erb"
+      instance_variables.each do |v|
+        locals.merge!(v.to_sym => instance_variable_get(v.to_sym))
+      end
+      filename = File.join "app", "views", controller_name, "#{view_name}.html.erb"
       template = File.read filename
       eruby = Erubis::Eruby.new(template)
-      eruby.result locals.merge(:env => env)
+      #puts locals
+      eruby.result locals
     end
 
     def controller_name
