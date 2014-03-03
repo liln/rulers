@@ -24,7 +24,11 @@ module Rulers
 
       def self.find(id)
         begin
+          # ActiveRecord cache model - my copy, no sharing
           FileModel.new("db/quotes/#{id}.json")
+
+          # DataMapper cache model - "why ever have more than one?"
+          # Object.const_get() SOMETHING?!@?
         rescue
           return nil
         end
@@ -33,6 +37,19 @@ module Rulers
       def self.all
         files = Dir["db/quotes/*.json"]
         files.map { |f| FileModel.new f }
+      end
+
+      def self.find_all_by_submitter(name)
+        files = Dir["db/quotes/*.json"]
+        filertn = []
+        files.each do |file|
+          obj = File.read(file)
+          hash = MultiJson.load(obj)
+          if hash["submitter"] == name
+            filertn << FileModel.new(file)
+          end
+        end
+        filertn
       end
 
       def self.create(attrs)
@@ -57,6 +74,12 @@ TEMPLATE
         end
 
         FileModel.new "db/quotes/#{id}.json"
+      end
+
+      def save
+        File.open(@filename, "w") do |f|
+          f.write MultiJson.dump(@hash)
+        end
       end
     end
   end
