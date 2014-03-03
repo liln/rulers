@@ -32,11 +32,12 @@ module Rulers
       @response
     end
 
-    def render_response(*args)
-      response(render(*args))
+    def render(*args)
+      response(render_now(*args))
+      # can add debug stuff here if we wanted
     end
 
-    def render(view_name, locals = {})
+    def render_now(view_name, locals = {})
       instance_variables.each do |v|
         locals.merge!(v.to_sym => instance_variable_get(v.to_sym))
       end

@@ -20,6 +20,7 @@ module Rulers
           st, hd, rs = controller.get_response.to_a
           [st, hd, [rs.body].flatten]
         else
+          text = controller.render_now(act.to_s)
           [200, {'Content-Type' => 'text/html'}, [text]]
         end
       rescue Exception => e
