@@ -1,5 +1,5 @@
 require "rack/test"
-require "test/unit"
+require "minitest/autorun"
 
 # Always user local Rulers first
 this_dir = File.join(File.dirname(__FILE__),"..")
